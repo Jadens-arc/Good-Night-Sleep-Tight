@@ -1,11 +1,16 @@
 import requests
-import pyttsx3
+import torch
 import time
+from TTS.api import TTS
 from datetime import datetime
+from torch.serialization import add_safe_globals
+from TTS.tts.configs.xtts_config import XttsConfig
+
+add_safe_globals([XttsConfig])
 
 STORY_PROMPT = """
 Write a 200 word bedtime story.
-Make it very original and random and whimsical
+Make it very original, whimsical, and completely different from every story you've wrote me in the past
 Don't include any acknowledgements or suggestions.
 Just give me the story by itself.
 """
@@ -16,21 +21,25 @@ def generate_story() -> str:
     r = requests.post(f"{OLLAMA_URL}/api/generate", json={
         "model": "georgia:latest",
         "prompt": STORY_PROMPT,
-        "stream": False
+        "stream": False,
+        "options": {
+            "temperature": 0,
+            "top_p": 0,
+            "max_tokens": 300
+        }
     })
     return r.json().get("response")
 
-def text_to_speech(text: str, filepath: str, directory: str="outputs") -> None:
-    engine = pyttsx3.init()
-    engine.save_to_file(text, directory + "/" + filepath)
-    try:
-        engine.runAndWait()
-    except:
-        pass
+def text_to_speech(text: str, file_path: str, directory: str="/Users/jaden/Documents/goodnight-sleep-tight/outputs") -> None:
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2").to(device)
+    wav = tts.tts(text, speaker_wav=f"{directory}/audio.wav", language="en")
+    tts.tts_to_file(text, speaker_wav=f"{directory}/audio.wav", language="en", file_path=file_path)
 
 if __name__ == "__main__":
     print("Generating story")
-    story = generate_story()
+    # story = generate_story()
+    story = "Hello world!"
     print(f"Generated\n\n{story}\n")
     print("Converting text to speech")
     date = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
