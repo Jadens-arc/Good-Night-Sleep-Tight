@@ -31,10 +31,8 @@ def generate_story() -> str:
     return r.json().get("response")
 
 def text_to_speech(text: str, file_path: str, directory: str="/Users/jaden/Documents/goodnight-sleep-tight/outputs") -> None:
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-    tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2").to(device)
-    wav = tts.tts(text, speaker_wav=f"{directory}/audio.wav", language="en")
-    tts.tts_to_file(text, speaker_wav=f"{directory}/audio.wav", language="en", file_path=file_path)
+    tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2").to("cpu")
+    tts.tts_to_file(text, speaker_wav=f"audio.wav", language="en", file_path=file_path)
 
 if __name__ == "__main__":
     print("Generating story")
