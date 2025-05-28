@@ -9,7 +9,7 @@ from TTS.tts.configs.xtts_config import XttsConfig
 add_safe_globals([XttsConfig])
 
 STORY_PROMPT = """
-Write a 200 word bedtime story.
+Write a 50 word bedtime story.
 Make it very original, whimsical, and completely different from every story you've wrote me in the past
 Don't include any acknowledgements or suggestions.
 Just give me the story by itself.
@@ -36,12 +36,11 @@ def text_to_speech(text: str, file_path: str, directory: str="/Users/jaden/Docum
 
 if __name__ == "__main__":
     print("Generating story")
-    # story = generate_story()
-    story = "Hello world!"
+    story = generate_story()
     print(f"Generated\n\n{story}\n")
     print("Converting text to speech")
     date = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-    file_path = f"output-{date}.wav"
+    file_path = f"outputs/output-{date}.wav"
     text_to_speech(story, file_path)
     print(f"Done! Saved to {file_path}")
     time.sleep(1)
