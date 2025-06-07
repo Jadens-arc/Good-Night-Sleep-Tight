@@ -9,8 +9,9 @@ import os
 add_safe_globals([XttsConfig])
 
 STORY_PROMPT = """
-Write a 50 word bedtime story.
-Make it very original, whimsical, and completely different from every story you've wrote me in the past
+Write a 200 word bedtime story.
+Make it very original, whimsical, and completely different from every story you've wrote me in the past.
+End it with good night sleep tight my love
 Don't include any acknowledgements or suggestions.
 Just give me the story by itself.
 """
