@@ -9,7 +9,7 @@ SERVER_PORT = 8081
 @app.route('/')
 def index():
     for _, _, files in os.walk('static/outputs'): 
-        stories = files
+        stories = sorted(files, reverse=True)
     
     if ".gitignore" in stories: stories.remove(".gitignore")
     if ".DS_Store" in stories: stories.remove(".DS_Store")
