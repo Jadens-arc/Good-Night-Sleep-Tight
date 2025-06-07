@@ -13,4 +13,4 @@ def index():
 
     return flask.render_template('Index/index.html', stories=stories)
 
-app.run(host="0.0.0", port=8081, debug=True)
+app.run(host="0.0.0.0", port=8081, debug=True)
