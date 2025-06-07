@@ -4,7 +4,7 @@ import os
 app = flask.Flask(__name__)
 
 SERVER_HOST = "0.0.0.0"
-SERVER_PORT = 8081
+SERVER_PORT = 80
 
 @app.route('/')
 def index():
