@@ -3,6 +3,9 @@ import os
 
 app = flask.Flask(__name__)
 
+SERVER_HOST = "0.0.0.0"
+SERVER_PORT = 8081
+
 @app.route('/')
 def index():
     for _, _, files in os.walk('static/outputs'): 
@@ -13,4 +16,9 @@ def index():
 
     return flask.render_template('Index/index.html', stories=stories)
 
-app.run(host="0.0.0.0", port=8081, debug=True)
+@app.route('/generate_new_story')
+def generate_new_story():
+    os.system("python3 story_generator.py")
+    return flask.jsonify({"success": True})
+
+app.run(SERVER_HOST, SERVER_PORT, debug=True)

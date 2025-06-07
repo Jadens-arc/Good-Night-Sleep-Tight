@@ -4,6 +4,7 @@ from TTS.api import TTS
 from datetime import datetime
 from torch.serialization import add_safe_globals
 from TTS.tts.configs.xtts_config import XttsConfig
+import os
 
 add_safe_globals([XttsConfig])
 
@@ -33,6 +34,8 @@ def text_to_speech(text: str, file_path: str) -> None:
     tts.tts_to_file(text, speaker_wav=f"audio.wav", language="en", file_path=file_path)
 
 if __name__ == "__main__":
+    with open("generating_story.txt", "w") as f:
+        f.write("Generating story...")
     print("Generating story")
     story = generate_story()
     print(f"Generated\n\n{story}\n")
@@ -44,3 +47,4 @@ if __name__ == "__main__":
     print("Done!")
     print("Sleeping for 1 second to ensure all files are written")
     time.sleep(1)
+    os.remove("generating_story.txt")

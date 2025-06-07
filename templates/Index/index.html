@@ -4,7 +4,10 @@
 
 <div class="d-flex justify-content-center flex-column">
     <h1>Good Night My Love</h1>
-    <button class="btn btn-pink btn-lg my-5">Play Latest Story</button>
+    <div class="my-5 d-flex flex-column">
+        <button class="btn btn-pink btn-lg my-3" id="play-latest-story">Play Latest Story</button>
+        <button class="btn btn-pink btn-lg my-3" id="generate-new-story">Generate New Story</button>
+    </div>
     <div class="col">
         {% for story in stories %}
             <div class="alert alert-light mt-3 row" role="alert">
@@ -18,6 +21,21 @@
 </div>
 
 <script defer>
+    document.getElementById("play-latest-story").addEventListener("click", (e) => {
+        document.getElementById("player-1").play();
+    })
+    document.getElementById("generate-new-story").addEventListener("click", (e) => {
+        fetch("/generate_new_story")
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.reload();
+                } else {
+                    alert("Failed to generate new story.");
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    })
     document.querySelectorAll('.player').forEach(player => {
         new Plyr(`#${player.id}`);
         console.log(`Player initialized for ${player.id}`);
