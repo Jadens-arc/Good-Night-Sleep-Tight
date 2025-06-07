@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="d-flex justify-content-center flex-column">
+    <h1>Good Night My Love</h1>
+    <button class="btn btn-pink btn-lg my-5">Play Latest Story</button>
+    <div class="col">
+        {% for story in stories %}
+            <div class="alert alert-light mt-3 row" role="alert">
+                {{ story }}
+                <audio id="player-{{ loop.index }}" class="player" controls>
+                    <source src="{{ url_for('static', filename='outputs/' + story) }}" type="audio/wav" />
+                </audio>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script defer>
+    document.querySelectorAll('.player').forEach(player => {
+        new Plyr(`#${player.id}`);
+        console.log(`Player initialized for ${player.id}`);
+    });
+</script>
+{% endblock %}
