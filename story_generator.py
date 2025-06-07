@@ -18,12 +18,12 @@ OLLAMA_URL = "http://192.168.0.111:11434"
 
 def generate_story() -> str:
     r = requests.post(f"{OLLAMA_URL}/api/generate", json={
-        "model": "georgia:latest",
+        "model": "gemma3:4b",
         "prompt": STORY_PROMPT,
         "stream": False,
         "options": {
-            "temperature": 0,
-            "top_p": 0,
+            "temperature": 0.7,
+            "top_p": 0.9,
             "max_tokens": 300
         }
     })
@@ -46,5 +46,5 @@ if __name__ == "__main__":
     print(f"Saved to {file_path}")
     print("Done!")
     print("Sleeping for 1 second to ensure all files are written")
-    time.sleep(1)
     os.remove("generating_story.txt")
+    time.sleep(1)

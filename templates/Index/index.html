@@ -2,8 +2,16 @@
 
 {% block content %}
 
+<div id="loading-cover" class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 z-2 d-flex flex-column align-items-center justify-content-center visually-hidden">
+    <div class="d-flex justify-content-center z-3">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+</div>
+
 <div class="d-flex justify-content-center flex-column">
-    <h1 class="text-light fs-1">Good Night My Love</h1>
+    <h1 class="text-light fs-1">Good Night Sleep Tight</h1>
     <div class="my-5 d-flex flex-column">
         <button class="btn btn-pink btn-lg my-3" id="play-latest-story">Play Latest Story</button>
         <button class="btn btn-pink btn-lg my-3" id="generate-new-story">Generate New Story</button>
@@ -25,6 +33,7 @@
         document.getElementById("player-1").play();
     })
     document.getElementById("generate-new-story").addEventListener("click", (e) => {
+        document.getElementById("loading-cover").classList.remove("visually-hidden");
         fetch("/generate_new_story")
             .then(response => response.json())
             .then(data => {
